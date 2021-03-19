@@ -1,0 +1,22 @@
+{
+  "name": "jobsboardapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Jobs",
+    "Board",
+    "API"
+  ],
+  "author": "Vogonyo",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "moongoose": "0.0.5",
+    "morgan": "^1.10.0"
+  }
+}
