@@ -8,7 +8,7 @@ Star⭐ the repo if you like what you see😉.
 [![Twitter Follow](https://img.shields.io/twitter/follow/vogonyo.svg?style=social)](https://twitter.com/vogonyo)
 
 ## Jobs Board Open Source with best practices built with MERN
-* React for UI and Redux for state management 
+* React for UI and Redux for state management/ Client
 * Nodejs for backend /server
 * SCSS for design 
 
