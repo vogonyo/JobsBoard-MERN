@@ -17,6 +17,9 @@ Star⭐ the repo if you like what you see😉.
 
 <img src="design/desktop-preview.jpg"/>
 <img src="design/desktop-design.jpg"/>
+
+| Normal| Active|
+|------|-------|
 |<img src="design/mobile-design.jpg" width="400"/> | 
 <img src="design/active-states.jpg" width="400"/>
 <img src="design/mobile-with-filters.jpg" src="400"/> |
