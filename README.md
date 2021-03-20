@@ -1,5 +1,5 @@
 # JobsBoard-MERN
-# 🔥🔥 Originally a challenge from frontendmentor
+# 🔥🔥 Fully functional SAAS JobsBoard
 - Frontend design from frontendmentor
 - Specs from remoteok.io
 
@@ -17,9 +17,9 @@ Star⭐ the repo if you like what you see😉.
 
 <img src="design/desktop-preview.jpg"/>
 <img src="design/desktop-design.jpg"/>
-<img src="design/mobile-design.jpg" width="400"/>
+|<img src="design/mobile-design.jpg" width="400"/> | 
 <img src="design/active-states.jpg" width="400"/>
-<img src="design/mobile-with-filters.jpg" src="400"/>
+<img src="design/mobile-with-filters.jpg" src="400"/> |
 
 
 ## Packages Used
