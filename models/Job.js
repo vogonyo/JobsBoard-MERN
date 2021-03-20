@@ -10,6 +10,11 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Job posting must have company logo']
     },
+    description: {
+        type: String,
+        required: [true, 'Job posting must have a description'],
+        minlength:[200, 'Job Posting must exceed 200 characters']
+    },
     new: {
         type: Boolean,
         default: true
@@ -24,10 +29,14 @@ const jobSchema = new mongoose.Schema({
         maxlength:[50, 'Job must have less than 50 characters'],
         minlength: [5, 'Position must have at least 5 characters']
     },
-    slug: String,
+    slug: {
+        type: String,
+        lowercase: true,
+        unique: true
+    },
     role: {
         type: String,
-
+        required: [true, 'Job Posting must have  a role']
     },
     postedAt: {
         type: Date,
@@ -45,12 +54,17 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Job must have a location'],
     },
-    languages:{
-        type: [String]
-    },
-    tools:{
-        type: [String]
+    languages: [{type: String}],
+    tools:[{type: String}],
+    postedBy: {        
+        type: mongoose.Schema.Types.ObjectId,        
+        ref: 'User'    
     }
+});
+
+jobSchema.pre('save', function(next){
+    this.slug = slugify(this.position + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36));
+    next();
 });
 
 const Job =  mongoose.model('Job', jobSchema);
