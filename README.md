@@ -20,9 +20,9 @@ Star⭐ the repo if you like what you see😉.
 
 | Normal| Active|
 |------|-------|
-|<img src="design/mobile-design.jpg" width="400"/> | 
-<img src="design/active-states.jpg" width="400"/>
-<img src="design/mobile-with-filters.jpg" src="400"/> |
+|<img src="design/mobile-design.jpg" width="400"/> | <img src="design/mobile-with-filters.jpg" src="400"/> <img src="design/active-states.jpg" width="400"/>|
+
+
 
 
 ## Packages Used
