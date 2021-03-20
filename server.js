@@ -11,19 +11,13 @@ process.on('uncaughtException', err => {
   process.exit(1);
 });
 
-// Load env vars
-
 // Connect to database
 connectDB();
 
 
-// const userRouter = require('./routes/userRoutes');
-// const challengeRouter = require('./routes/challengeRoutes');
-
-
 const app = require('./app');
 
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 2000;
 
 const server = app.listen(
   PORT,
