@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const marked= require('marked');
+const createDomPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const dompurify = createDomPurify(new JSDOM().window)
 
 const jobSchema = new mongoose.Schema({
     company:{
@@ -13,8 +17,7 @@ const jobSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, 'Job posting must have a description'],
-        minlength:[200, 'Job Posting must exceed 200 characters']
-    },
+     },
     new: {
         type: Boolean,
         default: true
@@ -52,19 +55,34 @@ const jobSchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: [true, 'Job must have a location'],
+        required: [true, 'Job must have a location']
     },
     languages: [{type: String}],
     tools:[{type: String}],
     postedBy: {        
         type: mongoose.Schema.Types.ObjectId,        
         ref: 'User'    
+    },
+    sanitizedHtml: {
+        type: String,
+        required: true
     }
 });
 
+
 jobSchema.pre('save', function(next){
-    this.slug = slugify(this.position + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36));
+    //Slug
+    this.slug = slugify(this.position + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36), {strict: true});
     next();
+});
+
+//Sanitize description from harmful html input ++
+//convert markdown to html
+jobSchema.pre('validate', function(next){
+  if(this.description){
+      this.sanitizedHTML = dompurify(marked(this.description))
+  }
+  next();
 });
 
 const Job =  mongoose.model('Job', jobSchema);
