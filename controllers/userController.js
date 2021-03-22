@@ -6,7 +6,11 @@ const User = require('../models/userModel.js');
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
+<<<<<<< HEAD
 exports.loginUser = asyncHandler(async (req, res) => {
+=======
+const loginUser = asyncHandler(async (req, res) => {
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
@@ -22,11 +26,17 @@ exports.loginUser = asyncHandler(async (req, res) => {
     res.status(401)
     throw new Error('Invalid email or password')
   }
+<<<<<<< HEAD
 });
+=======
+})
+
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
 
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
+<<<<<<< HEAD
 exports.registerUser = asyncHandler(async(req, res) => {
   const{ username, email, password} = req.body;
   
@@ -62,6 +72,41 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @route   GET /api/users/profile
   // @access  Private
   exports.getUserProfile = asyncHandler(async (req, res) => {
+=======
+const registerUser = asyncHandler(async (req, res) => {
+    const { username, email, password} = req.body
+  
+    const userExists = await User.findOne({ email })
+  
+    if (userExists) {
+      res.status(400)
+      throw new Error('User already exists')
+    }
+  
+    const user = await User.create({
+      username,
+      email,
+      password
+    })
+  
+    if (user) {
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: generateToken(user._id),
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid user data')
+    }
+  })
+  // @desc    Get user profile
+  // @route   GET /api/users/profile
+  // @access  Private
+  const getUserProfile = asyncHandler(async (req, res) => {
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
     const user = await User.findById(req.user._id)
   
     if (user) {
@@ -80,7 +125,11 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @desc    Update user profile
   // @route   PUT /api/users/profile
   // @access  Private
+<<<<<<< HEAD
   exports.updateUserProfile = asyncHandler(async (req, res) => {
+=======
+  const updateUserProfile = asyncHandler(async (req, res) => {
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
     const user = await User.findById(req.user._id)
   
     if (user) {
@@ -108,7 +157,11 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @desc    Get all users
   // @route   GET /api/users
   // @access  Private/Admin
+<<<<<<< HEAD
   exports.getUsers = asyncHandler(async (req, res) => {
+=======
+  const getUsers = asyncHandler(async (req, res) => {
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
     const users = await User.find({})
     res.json(users)
   })
@@ -116,7 +169,11 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @desc    Delete user
   // @route   DELETE /api/users/:id
   // @access  Private/Admin
+<<<<<<< HEAD
   exports.deleteUser = asyncHandler(async (req, res) => {
+=======
+  const deleteUser = asyncHandler(async (req, res) => {
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
     const user = await User.findById(req.params.id)
   
     if (user) {
@@ -131,7 +188,11 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @desc    Get user by ID
   // @route   GET /api/users/:id
   // @access  Private/Admin
+<<<<<<< HEAD
   exports.getUserById = asyncHandler(async (req, res) => {
+=======
+  const getUserById = asyncHandler(async (req, res) => {
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
     const user = await User.findById(req.params.id).select('-password')
   
     if (user) {
@@ -145,11 +206,19 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @desc    Update user
   // @route   PUT /api/users/:id
   // @access  Private/Admin
+<<<<<<< HEAD
   exports.updateUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
   
     if (user) {
       user.username = req.body.username || user.username
+=======
+  const updateUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+  
+    if (user) {
+      user.name = req.body.username || user.username
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
       user.email = req.body.email || user.email
       user.isAdmin = req.body.isAdmin
   
@@ -165,4 +234,19 @@ exports.registerUser = asyncHandler(async(req, res) => {
       res.status(404)
       throw new Error('User not found')
     }
+<<<<<<< HEAD
   });
+=======
+  })
+  
+  module.exports = {
+    loginUser,
+    registerUser,
+    getUserProfile,
+    updateUserProfile,
+    getUsers,
+    deleteUser,
+    getUserById,
+    updateUser,
+  };
+>>>>>>> 5987eb9b465b0b1442c1c4034a6836c9fcbfd3e0
