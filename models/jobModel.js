@@ -49,8 +49,16 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: [true, 'A job must have a contract'],
         enum:{
-            values: ['Part time', 'Full time'],
+            values: ['Part Time', 'Full Time'],
             message: 'Contract is either Partime or fulltime '
+        }
+    },
+    level: {
+        type: String,
+        required: [true, 'A job must have a level'],
+        enum:{
+            values: ['Senior', 'Junior', 'Other'],
+            message: 'Level can be either Senior , Junior or Other '
         }
     },
     location: {
@@ -80,11 +88,11 @@ jobSchema.pre('save', function(next){
 //convert markdown to html
 jobSchema.pre('validate', function(next){
   if(this.description){
-      this.sanitizedHTML = dompurify(marked(this.description))
+      this.sanitizedHtml = dompurify(marked(this.description))
   }
   next();
 });
 
 const Job =  mongoose.model('Job', jobSchema);
 
-module.export = Job;
+module.exports = Job;

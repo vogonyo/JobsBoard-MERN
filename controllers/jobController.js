@@ -1,5 +1,5 @@
-import asyncHandler from 'express-async-handler';
-import Job from '../models/jobModel';
+const asyncHandler = require('../utils/asyncHandler');
+const Job = require('../models/jobModel');
 
 //@desc Create new Job 
 //@route POST /api/jobs
@@ -22,7 +22,7 @@ exports.getAllJobs = asyncHandler(async(req, res) => {
    const jobs = await Job.find();
 
    res.status(200).json({
-       status: 'sucess',
+       status: 'success',
        results: jobs.length,
        data: {
            jobs
