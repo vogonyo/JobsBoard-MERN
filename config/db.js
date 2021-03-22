@@ -4,7 +4,7 @@ require('dotenv').config({path: './config.env'});
 
 const connectDB = async() => {
   try{
-const conn = await mongoose.connect('mongodb+srv://vogonyo:nyarongi101@cluster0.wsbhf.mongodb.net/JobsBoard?retryWrites=true&w=majority', {
+const conn = await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
