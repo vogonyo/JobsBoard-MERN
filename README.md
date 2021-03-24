@@ -33,6 +33,18 @@ Star⭐ the repo if you like what you see😉.
 |☑️ Express|Nodejs web framework|
 |☑️ Slugify|Convert job into url slug title|
 |☑️ dotenv|Loads environment variables from .env|
+|☑️ marked|Work with markdown files|
+|☑️ dompurify | strip out everything that contains dangerous HTML and thereby prevent XSS attacks and other nastiness.|
+|☑️ jsdom | It implements web standards like browsers do. Works with dompurify |
+|☑️ path |  contains several helper functions to help make path manipulation easier |
+|☑️ validator |  validation library for handling input data validation |
+|☑️ xss-clean | Middleware to sanitize user input|
+|☑️ express-async-handler | to cat try catch blocks |
+|☑️ express-mongo-sanitize | Prevent nosql injections|
+|☑️ colors | Distinguish logs in development|
+|☑️ crypto | The crypto module is a wrapper for OpenSSL cryptographic functions.|
+|☑️ bcryptjs | Hashing passwords|
+|☑️ morgan | HTTP request logger middleware for Node.js. This will help us debug our API while in development|
 
 ## 🌗 Dark theme
 Adapts to device theme
