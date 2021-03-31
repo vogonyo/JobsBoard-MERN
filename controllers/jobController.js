@@ -1,3 +1,4 @@
+const AppError = require('../utils/appError');
 const asyncHandler = require('../utils/asyncHandler');
 const Job = require('../models/jobModel');
 
@@ -34,11 +35,11 @@ exports.getAllJobs = asyncHandler(async(req, res) => {
 //@desc Get single Job by Slug
 //@route GET /api/job/:slug
 //@access Public
-exports.getJob= asyncHandler(async(req, res) => {
+exports.getJob= asyncHandler(async(req, res, next) => {
     const job = await Job.findById(req.params.id);
 
     if(!job){
-        throw new Error('Invalid job')
+        return next(new AppError(`Job not found with id of ${req.params.id}`), 404);
     }
 
     res.status(200).json({
@@ -52,8 +53,8 @@ exports.getJob= asyncHandler(async(req, res) => {
 //@desc Update single Job by Id
 //@route PATCH /api/job/:id
 //@access Public
-exports.updateJob = asyncHandler(async(req, res) => {
-  const job = Job.findByIdAndUpdate(req.params.id, req.body, {
+exports.updateJob = asyncHandler( async(req, res) => {
+  const job = await Job.findByIdAndUpdate(req.params.id, req.body, {
       new:true,//return updated job
       runValidators: true
   });

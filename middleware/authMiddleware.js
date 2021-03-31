@@ -41,3 +41,12 @@ exports.admin = (req, res, next) => {
       throw new Error('Not authorized as an admin')
     }
 };
+
+exports.user = (req, res, next) => {
+  if (req.user && !req.user.isAdmin) {
+    next()
+  } else {
+    res.status(401)
+    throw new Error('Not authorized a user')
+  }
+};

@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken.js');
 const User = require('../models/userModel.js');
-
+const AppError = require('../utils/appError');
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -16,6 +16,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
   } else {
@@ -28,8 +29,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 exports.registerUser = asyncHandler(async(req, res) => {
-  const{ username, email, password} = req.body;
-  
+  const {username, email, password} = req.body;
   //Check if user exists
   const userExists = await User.findOne({ email });
 
@@ -37,7 +37,7 @@ exports.registerUser = asyncHandler(async(req, res) => {
     res.status(400);
     throw new Error('User already exists')
   }
-
+  
   const user = await User.create({
     username,
     email,
@@ -131,14 +131,13 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @desc    Get user by ID
   // @route   GET /api/users/:id
   // @access  Private/Admin
-  exports.getUserById = asyncHandler(async (req, res) => {
+  exports.getUserById = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.params.id).select('-password')
   
     if (user) {
       res.json(user)
     } else {
-      res.status(404)
-      throw new Error('User not found')
+      next(new AppError(`User with the id ${req.params.id} not found!`, 404))
     }
   })
   
@@ -166,3 +165,25 @@ exports.registerUser = asyncHandler(async(req, res) => {
       throw new Error('User not found')
     }
   });
+
+
+   // @desc    Forgot password
+  // @route   POST /api/users/profile
+  // @access  Public
+  exports.forgotPassword = asyncHandler(async (req, res, next) => {
+    const user = await User.findOne({email: req.body.email})
+     
+    if(!user){
+      return next(new Error('There is no user with that email', 404));
+    }
+    //Get reset token
+    const resetToken = user.createPasswordResetToken();
+
+    await user.save({ validateBeforeSave: false })
+
+    res.status(200).json({
+        success: true,
+        data: user
+    })
+
+  })

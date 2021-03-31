@@ -6,13 +6,20 @@
   "scripts": {
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "jest --watch",
+    "data:import": "node seeder",
+    "data:destroy": "node jobsboardapi/seeder -d",
+    "debug": "ndb server.js"
   },
   "keywords": [
     "Jobs",
     "Board",
     "API"
   ],
+  "jest": {
+    "testEnvironment": "node"
+  },
   "author": "Vogonyo",
   "license": "MIT",
   "dependencies": {
@@ -37,5 +44,9 @@
     "slugify": "^1.4.7",
     "validator": "^13.5.2",
     "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
   }
 }

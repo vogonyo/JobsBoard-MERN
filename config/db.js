@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
-
-require('dotenv').config({path: './config.env'});
+const colors = require('colors');
+// require('dotenv').config({path: './config.env'});
 
 const connectDB = async() => {
   try{
-const conn = await mongoose.connect('mongodb+srv://vogonyo:nyarongi101@cluster0.wsbhf.mongodb.net/JobsBoard?retryWrites=true&w=majority', {
+const conn = await mongoose.connect('mongodb://127.0.0.1:27017/jobs-board-api', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: true
   });
   console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline);
 }

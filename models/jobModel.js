@@ -8,7 +8,8 @@ const dompurify = createDomPurify(new JSDOM().window)
 const jobSchema = new mongoose.Schema({
     company:{
         type:String,
-        required:[true, 'Job must have company name']
+        required:[true, 'Job must have company name'],
+        trim: true
     },
     logo: {
         type: String,
@@ -57,8 +58,8 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: [true, 'A job must have a level'],
         enum:{
-            values: ['Senior', 'Junior', 'Other'],
-            message: 'Level can be either Senior , Junior or Other '
+            values: ['Senior', 'Junior', 'Midweight'],
+            message: 'Level can be either Senior , Junior, or Midweight'
         }
     },
     location: {
