@@ -43,10 +43,10 @@ exports.admin = (req, res, next) => {
 };
 
 exports.user = (req, res, next) => {
-  if (req.user && !req.user.isAdmin) {
+  if (req.user && !(req.user.isAdmin)) {
     next()
   } else {
     res.status(401)
-    throw new Error('Not authorized a user')
+    throw new Error('Must be a user to do that!')
   }
 };

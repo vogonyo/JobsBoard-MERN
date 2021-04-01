@@ -110,7 +110,14 @@ exports.registerUser = asyncHandler(async(req, res) => {
   // @access  Private/Admin
   exports.getUsers = asyncHandler(async (req, res) => {
     const users = await User.find({})
-    res.json(users)
+    const adminCount = await User.find({ isAdmin: true });
+    
+    res.status(200).json({
+      success: true,
+      results: users.length + " users",
+      admins: adminCount.length,
+      data: users
+      })
   })
   
   // @desc    Delete user

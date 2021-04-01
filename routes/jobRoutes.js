@@ -8,12 +8,12 @@ const router = express.Router();
 router
   .route('/')
   .get(jobController.getAllJobs)
-  .post(user, jobController.createJob);
+  .post(jobController.createJob);
 
 router
   .route('/:id')
   .get(jobController.getJob)
-  .patch(user, jobController.updateJob)
-  .delete(user, jobController.deleteJob);
+  .patch(jobController.updateJob)
+  .delete(jobController.deleteJob);
 
 module.exports = router;

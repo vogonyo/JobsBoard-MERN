@@ -1,11 +1,40 @@
-const request = require('supertest');
+const app = require("../server");
+const supertest = require("supertest");
+// we also need our app for the correct routes!
+// const User = require('../models/userModel');
 
-const app = require('../app');
+// const userOne = {
+//     username: 'Mike',
+//     email: 'mike@example.com',
+//     password: 'mikeoggy'
+// }
+// beforeEach(  async() => {
+//    await User.deleteMany();
+//    await new User(userOne).save();
+// });
 
-test('Should signup a new user', async() => {
-    await request(app).post('/api/v1/users').send({
-       username: 'Drew',
-       email: 'Drew@example.com',
-       password: 'Mypassword2021'
-    }).expect(201)
+// afterEach(() => {
+//     console.log('After Each')
+// });
+
+beforeEach(() => {
+    jest.useFakeTimers()
+})
+
+describe('GET /api/v1/users', () => {
+    it('should respond with an array of users', async () => {
+      const response = await supertest(app)
+        .get('/api/v1/users')
+        .expect('Content-Type', /json/)
+        .expect(200);
+  
+      expect(response.body.length).toBeGreaterThan(0);
+    });
 });
+
+
+// Running all pending timers and switching to real timers using Jest
+afterEach(() => {
+    jest.runOnlyPendingTimers()
+    jest.useRealTimers()
+  })

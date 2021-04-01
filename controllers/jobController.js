@@ -20,7 +20,51 @@ exports.createJob = asyncHandler(async(req, res) => {
 //@route GET /api/jobs
 //@access Public
 exports.getAllJobs = asyncHandler(async(req, res) => {
-   const jobs = await Job.find();
+
+    //1)Remove page ,sort , limit, fields
+   const queryObj = {...req.query};
+   const excludedFields = ['page', 'sort', 'limit', 'fields'];
+   excludedFields.forEach(el => delete queryObj[el]);
+    
+   //2) Replace lte or gte or gt or lt with $lte 
+   let queryStr = JSON.stringify(queryObj);
+   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+  
+   let query = Job.find(JSON.parse(queryStr));
+
+   //2) Sorting
+   if(req.query.sort){
+    //Allow for multiple sort field separated by comma => saved in sortBy 
+       const sortBy = req.query.sort.split(',').join(' ')
+       query = query.sort(sortBy);
+    //If user does not specify the type of sorting
+   }else{
+       query = query.sort('-postedAt');
+   }
+
+   //Field Limiting
+   if(req.query.fields){
+       const fields = req.query.fields.split(',').join(' ');
+       query.select(fields);
+   
+    }else{
+    query = query.select('-__v')
+   }
+   
+   //Pagination
+   const page = req.query.page * 1 || 1;
+   const limit = req.query.limit * 1 || 2;
+   const skip = (page - 1) * limit;
+
+   //page=3&limit=10, 1-10, page 1, 11-20, page 2, 21-30, page 3
+   query = query.skip(skip).limit(limit);
+
+   if(req.query.page){
+       const numJobs = await Job.countDocuments();
+       if(skip >= numJobs) throw new Error('This page does not exist')
+   }
+   
+   const jobs = await query;
 
    res.status(200).json({
        status: 'success',
