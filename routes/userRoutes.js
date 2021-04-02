@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const { protect, admin } = require('../middleware/authMiddleware.js');
+const { auth, admin } = require('../middleware/authMiddleware.js');
 
 const {
     loginUser,
@@ -17,7 +17,7 @@ const {
 router
   .route('/')
   .post(registerUser)
-  .get(protect, admin, getUsers)
+  .get(auth, admin, getUsers)
 
 router
     .post('/login', loginUser)
@@ -27,13 +27,13 @@ router
   
 router
   .route('/profile')
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile)
+  .get(auth, getUserProfile)
+  .put(auth, updateUserProfile)
   
 router
   .route('/:id')
-  .delete(protect, admin, deleteUser)
-  .get(protect, admin, getUserById)
-  .put(protect, admin, updateUser)
+  .delete(auth, admin, deleteUser)
+  .get(auth, admin, getUserById)
+  .put(auth, admin, updateUser)
 
 module.exports = router;

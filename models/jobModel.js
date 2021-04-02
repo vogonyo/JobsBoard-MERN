@@ -50,8 +50,8 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: [true, 'A job must have a contract'],
         enum:{
-            values: ['Part Time', 'Full Time'],
-            message: 'Contract is either Partime or fulltime '
+            values: ['Part Time', 'Full Time', 'Contract'],
+            message: 'Contract is either Partime or fulltime or contract'
         }
     },
     level: {

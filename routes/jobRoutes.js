@@ -1,14 +1,17 @@
 const express = require('express');
 const jobController = require('./../controllers/jobController');
-const { user } = require('../middleware/authMiddleware.js');
+const { auth } = require('./../middleware/authMiddleware.js');
 
 const router = express.Router();
 
+router
+  .route('/top-featured-jobs')
+  .get(jobController.aliasTopJobs, jobController.getAllJobs)
 
 router
   .route('/')
   .get(jobController.getAllJobs)
-  .post(jobController.createJob);
+  .post(auth, jobController.createJob);
 
 router
   .route('/:id')

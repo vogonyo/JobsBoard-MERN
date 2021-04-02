@@ -4,7 +4,7 @@ const User = require('../models/userModel.js');
 
 
 
-exports.protect = asyncHandler(async (req, res, next) => {
+exports.auth = asyncHandler(async (req, res, next) => {
     let token;
   
     if (
@@ -40,13 +40,4 @@ exports.admin = (req, res, next) => {
       res.status(401)
       throw new Error('Not authorized as an admin')
     }
-};
-
-exports.user = (req, res, next) => {
-  if (req.user && !(req.user.isAdmin)) {
-    next()
-  } else {
-    res.status(401)
-    throw new Error('Must be a user to do that!')
-  }
 };

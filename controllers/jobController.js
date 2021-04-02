@@ -2,6 +2,14 @@ const AppError = require('../utils/appError');
 const asyncHandler = require('../utils/asyncHandler');
 const Job = require('../models/jobModel');
 
+
+exports.aliasTopJobs = (req, res, next) => {
+    req.query.limits= '10';
+    req.query.fields='logo,company,new,featured,position,postedAt,location,contract';
+    req.query.sort='-postedAt';
+    next();
+}
+
 //@desc Create new Job 
 //@route POST /api/jobs
 //@access Private
@@ -53,7 +61,7 @@ exports.getAllJobs = asyncHandler(async(req, res) => {
    
    //Pagination
    const page = req.query.page * 1 || 1;
-   const limit = req.query.limit * 1 || 2;
+   const limit = req.query.limit * 1 || 10;
    const skip = (page - 1) * limit;
 
    //page=3&limit=10, 1-10, page 1, 11-20, page 2, 21-30, page 3
